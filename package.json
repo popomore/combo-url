@@ -1,0 +1,23 @@
+{
+  "name": "combo-url",
+  "version": "0.1.0",
+  "description": "resolve combo url",
+  "main": "index",
+  "dependencies": {},
+  "devDependencies": {
+    "istanbul": "0",
+    "coveralls": "2",
+    "mocha": "1",
+    "should": "3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/popomore/combo-url"
+  },
+  "homepage": "https://github.com/popomore/combo-url",
+  "author": "popomore <sakura9515@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "make test"
+  }
+}
