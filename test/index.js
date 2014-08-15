@@ -18,36 +18,41 @@ describe('combo-url', function() {
     combo.isCombo('http://localhost?a.js?b.js');
   });
 
-  describe('resolve', function() {
+  describe('parse', function() {
 
     it('should return null when not combo url', function() {
-      (combo.resolve('http://localhost/a?a.js') === null).should.be.true;
+      (combo.parse('http://localhost/a?a.js') === null).should.be.true;
     });
 
-    it('should return combo url', function() {
-      combo.resolve('http://localhost/??a.js,b.js').should.eql({
-        host: 'http://localhost',
-        url: ['/a.js', '/b.js']
+    it('should object parsed by `url`', function() {
+      combo.parse('http://localhost/??a.js,b.js').should.eql({
+        protocol: 'http:',
+        slashes: true,
+        auth: null,
+        host: 'localhost',
+        port: null,
+        hostname: 'localhost',
+        hash: null,
+        search: '??a.js,b.js',
+        query: '?a.js,b.js',
+        pathname: '/',
+        path: '/??a.js,b.js',
+        href: 'http://localhost/??a.js,b.js',
+        combo: ['/a.js', '/b.js']
       });
     });
 
     it('should return combo url when has path', function() {
-      combo.resolve('http://localhost:80/c/d??a.js,b.js').should.eql({
-        host: 'http://localhost:80',
-        url: ['/c/d/a.js', '/c/d/b.js']
-      });
+      combo.parse('http://localhost:80/c/d??a.js,b.js').combo
+        .should.eql(['/c/d/a.js', '/c/d/b.js']);
     });
 
     it('should return combo url when has querystring', function() {
-      combo.resolve('http://localhost/??a.js?123%,b.js?456&input_encoding=utf-8').should.eql({
-        host: 'http://localhost',
-        url: ['/a.js', '/b.js']
-      });
+      combo.parse('http://localhost/??a.js?123%,b.js?456&input_encoding=utf-8').combo
+        .should.eql(['/a.js', '/b.js']);
 
-      combo.resolve('http://localhost/??a.js&input_encoding=utf-8,b.js?456').should.eql({
-        host: 'http://localhost',
-        url: ['/a.js']
-      });
+      combo.parse('http://localhost/??a.js&input_encoding=utf-8,b.js?456').combo
+        .should.eql(['/a.js']);
     });
   });
 });

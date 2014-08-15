@@ -8,19 +8,18 @@ exports.isCombo = function(url) {
   return url.indexOf('??') > -1;
 };
 
-exports.resolve = function(url) {
+exports.parse = function(url) {
   if (!exports.isCombo(url)) return null;
 
   url = parse(url);
-  var ret = {host: url.protocol + '//' + url.host};
   var comboPath = extractComboPath(url.query);
-  ret.url = comboPath
+  url.combo = comboPath
   .split(',')
   .map(function(item) {
     item = parse(item).pathname;
     return path.join(url.pathname, item);
   });
-  return ret;
+  return url;
 };
 
 // ??a.js,b.js&c=d => a.js,b.js
@@ -37,7 +36,6 @@ function extractComboPath(query) {
 }
 
 function decode(url) {
-  console.log(url)
   try {
     return decodeURIComponent(url);
   } catch(e) {

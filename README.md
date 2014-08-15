@@ -5,7 +5,7 @@
 [![Build Status](https://img.shields.io/coveralls/popomore/combo-url?style=flat)](https://coveralls.io/r/popomore/combo-url)
 [![NPM downloads](http://img.shields.io/npm/dm/combo-url.svg?style=flat)](https://npmjs.org/package/combo-url)
 
-resolve combo url
+resolve combo url such as `??a.js.b.js`
 
 ---
 
@@ -20,15 +20,16 @@ $ npm install combo-url -g
 ```
 var combo = require('combo-url');
 combo.isCombo('http://localhost?a.js'); // false
-combo.resolve('http://localhost?a.js'); // null
+combo.parse('http://localhost?a.js'); // null
 
 combo.isCombo('http://localhost??a.js.b.js'); // true
-combo.resolve('http://localhost??a.js.b.js');
+combo.parse('http://localhost??a.js.b.js');
 
 // return
 // {
-//  host: 'http://localhost',
-//  url: ['/a.js', '/b.js']
+//  host: 'localhost',
+//  ... properties parsed by require('url')
+//  combo: ['/a.js', '/b.js']
 // }
 ```
 
